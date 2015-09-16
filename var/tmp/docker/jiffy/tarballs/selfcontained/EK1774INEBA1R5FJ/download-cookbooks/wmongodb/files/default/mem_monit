@@ -1,0 +1,5 @@
+check system localhost
+    start program = "/etc/init.d/mongodb start"
+    stop program = "/etc/init.d/mongodb stop"
+    if memory usage > 90% then restart
+

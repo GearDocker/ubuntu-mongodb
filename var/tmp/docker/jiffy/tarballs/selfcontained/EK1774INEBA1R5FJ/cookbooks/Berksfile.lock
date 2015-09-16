@@ -1,0 +1,42 @@
+DEPENDENCIES
+  mongodb
+    git: git://github.com/GearChefCookbooks/chef-mongodb.git
+    revision: 517fbd7cff6f05470c3348ec246e7611a56d64eb
+  monit
+    git: https://github.com/axsuul/cookbook-monit
+    revision: 34e301c25292c91a876a53806b8907250d7f670d
+  wmongodb
+    path: .
+    metadata: true
+
+GRAPH
+  apt (2.8.2)
+  build-essential (2.2.3)
+  chef_handler (1.2.0)
+  dmg (2.2.2)
+  git (4.3.4)
+    build-essential (>= 0.0.0)
+    dmg (>= 0.0.0)
+    windows (>= 0.0.0)
+    yum-epel (>= 0.0.0)
+  mongodb (0.20.2)
+    apt (>= 1.8.2)
+    python (>= 0.0.0)
+    runit (>= 1.5.0)
+    yum (>= 3.0.0)
+  monit (1.1.0)
+  packagecloud (0.1.0)
+  python (1.4.6)
+    build-essential (>= 0.0.0)
+    yum-epel (>= 0.0.0)
+  runit (1.7.2)
+    packagecloud (>= 0.0.0)
+  windows (1.38.1)
+    chef_handler (>= 0.0.0)
+  wmongodb (0.1.7)
+    git (>= 0.0.0)
+    mongodb (>= 0.0.0)
+    monit (>= 0.0.0)
+  yum (3.7.1)
+  yum-epel (0.6.2)
+    yum (~> 3.2)
