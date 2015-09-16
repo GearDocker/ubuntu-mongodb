@@ -1,0 +1,79 @@
+# /etc/profile
+#TEST TEST
+
+# System wide environment and startup programs, for login setup
+# Functions and aliases go in /etc/bashrc
+#Add Proxy hosts if needed
+
+#export http_proxy="http://example.com:8080"
+#export ftp_proxy="http://example.com:8080"
+
+# Path manipulation
+if ! echo $PATH | /bin/grep -q "/sbin" ; then
+    PATH=/sbin:$PATH
+fi
+
+if ! echo $PATH | /bin/grep -q "/usr/sbin" ; then
+    PATH=/usr/sbin:$PATH
+fi
+
+if  ! echo $PATH | /bin/grep -q "/usr/local/sbin" ; then
+    PATH=/usr/local/sbin:$PATH
+fi
+
+if ! echo $PATH | /bin/grep -q "/usr/X11R6/bin" ; then
+    PATH="$PATH:/usr/X11R6/bin"
+fi
+
+if ! echo $PATH | /bin/grep -q "\." ; then
+    PATH="$PATH:."
+fi
+
+# No core files by default
+ulimit -S -c 0 > /dev/null 2>&1
+
+USER=`id -un`
+LOGNAME=$USER
+MAIL="/var/spool/mail/$USER"
+EDITOR=/bin/vi
+HOSTNAME=`/bin/hostname`
+HISTSIZE=1000
+
+if [ -z "$INPUTRC" -a ! -f "$HOME/.inputrc" ]; then
+    INPUTRC=/etc/inputrc
+fi
+
+for i in /etc/profile.d/*.sh ; do
+    if [ -r $i ]; then
+    	. $i
+    fi
+done
+
+unset i
+
+#if using bash and no ~/bashrc then run /etc/bashrc
+if [ "$BASH_VERSION" != "" ]; then
+
+        if [ ! -f ~/bashrc ]; then
+                if [ -f  /etc/bashrc ]; then
+                        . /etc/bashrc
+                fi
+        fi
+fi
+
+if [ `/usr/bin/whoami` = 'root' ]
+then
+        # Do not set PS1 for dumb terminals
+        if [ "$TERM" != 'dumb'  ] && [ -n "$BASH" ]
+        then
+                export PS1='\[\033[01;31m\]\h \[\033[01;34m\]\W \$ \[\033[00m\]'
+        fi
+else
+        # Do not set PS1 for dumb terminals
+        if [ "$TERM" != 'dumb'  ] && [ -n "$BASH" ]
+        then
+                export PS1='\[\033[01;32m\]\u@\h \[\033[01;34m\]\W \$ \[\033[00m\]'
+        fi
+fi
+
+shopt -s checkwinsize
